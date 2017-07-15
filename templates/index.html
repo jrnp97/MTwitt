@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% block meta %} {% endblock %}
+
+{% block title %} Mini - Twitt {% endblock %}
+
+
+{% block css %}
+    {% if request.user.is_authenticated %}
+    {% load static %}
+            <link rel="stylesheet" type="text/css" href="{% static 'css/style_user.css' %}">
+        {% else %}
+            <link rel="stylesheet" type="text/css" href="{% static 'css/style_index.css' %}">
+        {% endif %}
+{% endblock %}
+
+{% block navbar %}
+    {% if request.user.is_authenticated %}
+        {% include 'navbar.html' %}
+    {% endif %}
+
+{% endblock %}
+
+
+{% block content %}
+
+{% load static %}
+
+{% if request.user.is_authenticated %}
+    <h1>Tweets de todo el mundo que sigue</h1>
+{% else %}
+    <div class="container">
+        <div class="jumbotron box">
+            <div class="row">
+                <div class="col-md-12">
+                    <img src="{% static 'img/logo.png' %}" class="img-responsive logo">
+                    <br/>
+                </div>
+            </div>
+          <p>Una pequeña imitacion de twitter realizada en django, para probar las capacidades y entender el framework.</p>
+            <p>Solamente hay 2 caminos usted escoje </p>
+            <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                    <a href="{% url 'registration_register' %}"><button class="btn btn-success btn-md">Registrarse</button></a>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                    <a href="{% url 'auth_login' %}"><button class="btn btn-danger btn-md">Iniciar sesion</button></a>
+                </div>
+            </div>
+            <h2>Algo de lo que comparten  <i class="fa fa-hand-o-down" aria-hidden="true"></i></h2>
+                <div class="list-twitts">
+                    {% for a in object_list %}
+                    <div class="panel panel-success">
+
+                        <div class="panel-heading">
+                            <h3 class="panel-title" style="font-size: 8pt"> {{ a.user_twit }} </h3>
+                        </div>
+                        <div class="panel-body">
+                                <span>{{ a.text }}</span>
+                        </div>
+                        <div class="panel-footer">
+                            <div class="row">
+                                <div class="col-xs-6 col-sm-6 col-md-6">
+                                    <span class="text-left"><i class="fa fa-bullhorn" aria-hidden="true"></i></span>
+                                </div>
+                                <div class="col-xs-6 col-sm-6 col-md-6">
+                                    <p class="text-right" style="font-size: 6pt">{{ a.date_twit }}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    {% endfor %}
+                </div>
+        </div>
+    </div>
+{% endif %}
+
+{% endblock %}
+
+{% block footer %}
+    {% include 'footer.html' %}
+{% endblock %}

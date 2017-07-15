@@ -1,0 +1,41 @@
+body {
+    background: url("../img/fondo2.png");
+    width: 100%;
+}
+
+footer {
+    margin-top: 4em;
+    clear: both;
+}
+
+.logo
+{
+    border-radius: 10px;
+}
+
+.logo:hover
+{
+    box-shadow: 2px 2px  2px black;
+}
+
+.box
+{
+    margin-top: 3em;
+    box-shadow: 5px 5px 5px;
+}
+
+.box:hover
+{
+    box-shadow: 3px 3px 3px;
+}
+
+/*
+
+ */
+
+.list-twitts
+{
+    margin-top: 30px;
+    width: 100%;
+}
+
