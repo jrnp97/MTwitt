@@ -1,6 +1,4 @@
-# Mini-Ttwitt-Django #
-
-![alt-text](https://github.com/DGun17/MTwitt/blob/master/static/img/logo.png)
+# Mini-Ttwitt-Django #                   ![alt-text](https://github.com/DGun17/MTwitt/blob/master/static/img/logo.png)
 
 Aplicacion web que tiene las bases en twitter como modelo, con fines practicos para aprender del framework, realizado con 
 **Python 3.5**
