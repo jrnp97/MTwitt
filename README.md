@@ -39,3 +39,7 @@ Aplicacion web que tiene las bases en twitter como modelo, con fines practicos p
    
 
 Nota: se encontraran en el archivo de requeriments.txt
+
+# Ejemplo #
+
+![alt-text](https://github.com/DGun17/MTwitt/blob/master/static/img/pagination.png)

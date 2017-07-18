@@ -70,6 +70,22 @@
 
                     </div>
                     {% endfor %}
+                    <ul class="pager">
+                        <li>
+                            <!-- Verificando si existe una pagina previa -->
+                            {% if page_obj.has_previous %}
+                                <!-- Creando enlace  -->
+                            <a href="?page={{ page_obj.previous_page_number }}">Anteriores</a>
+                            {% endif %}
+                        </li>
+                        <li>
+                            <!-- Verificando si existe una siguiente pagina -->
+                            {% if page_obj.has_next %}
+                                <!-- Creando enlace  -->
+                            <a href="?page={{ page_obj.next_page_number }}">Siguientes</a>
+                            {% endif %}
+                        </li>
+                    </ul>
                 </div>
         </div>
     </div>

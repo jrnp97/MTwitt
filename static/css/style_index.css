@@ -33,24 +33,6 @@ footer {
 
  */
 
-/* media */
-.logo
-{
-    display: block;
-    left: 30%;
-    position: absolute;
-    margin: auto;
-    top: 1em;
-    font-family: 'Frijole', 'Arial';
-}
-.logo p
-{
-    font-family: 'Frijole', 'Arial';
-    font-size: 10pt;
-}
-
-
-
 .list-twitts
 {
     margin-top: 30px;

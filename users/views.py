@@ -96,6 +96,8 @@ class Register(RegistrationView):
 class Index(ListView):
     model = Twitt
     template_name = 'index.html'
+    #Declarando cantidad de objetos por "pagina"
+    paginate_by = 3
 
 
 class Profile(CreateView):
