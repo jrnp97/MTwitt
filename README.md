@@ -1,4 +1,4 @@
-# Mini-Ttwitt-Django #
+# Mini-Ttwitt-Django #                   
 
 ![alt-text](https://github.com/DGun17/MTwitt/blob/master/static/img/logo.png)
 
