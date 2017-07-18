@@ -8,27 +8,6 @@ footer {
     clear: both;
 }
 
-.logo
-{
-    border-radius: 10px;
-}
-
-.logo:hover
-{
-    box-shadow: 2px 2px  2px black;
-}
-
-.box
-{
-    margin-top: 3em;
-    box-shadow: 5px 5px 5px;
-}
-
-.box:hover
-{
-    box-shadow: 3px 3px 3px;
-}
-
 /*
 
  */
@@ -42,14 +21,8 @@ footer {
     margin: auto;
     top: 1em;
     font-family: 'Frijole', 'Arial';
+    font-size: 15pt !important;
 }
-.logo p
-{
-    font-family: 'Frijole', 'Arial';
-    font-size: 10pt;
-}
-
-
 
 .list-twitts
 {

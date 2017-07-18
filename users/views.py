@@ -1,7 +1,22 @@
+from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.views.generic import CreateView, ListView
 from django.core.urlresolvers import reverse_lazy
 from django.contrib.auth.models import User
+
+#Modulos necesarios tanto para registro y activacion
+from django.conf import settings
+from django.contrib.sites.shortcuts import get_current_site
+
+#Modulos necesarios para configuracion primordial de registro
+from registration.models import RegistrationProfile
+from registration import signals
+from .forms import UserRegisterForm
+from registration.views import RegistrationView
+
+
+#Importando la vistas para configuracion de activacion
+from registration.backends.default.views import ActivationView, ResendActivationView
 
 #Modulo para el tiempo
 from datetime import datetime
@@ -13,12 +28,77 @@ from tweet.views import Tview
 
 # Create your views here.
 
-class index(ListView):
+#Creando la vista para el manejo de la activacion
+class Activation(ActivationView):
+
+    registration_profile = RegistrationProfile
+
+    def activate(self, *args, **kwargs):
+        activation_key = kwargs.get('activation_key', '')
+        site = get_current_site(self.request)
+        activated_user = (self.registration_profile.objects
+                          .activate_user(activation_key, site))
+        if activated_user:
+            signals.user_activated.send(sender=self.__class__,
+                                        user=activated_user,
+                                        request=self.request)
+        return activated_user
+
+    def get_success_url(self, user):
+        return ('user:registration_activation_complete', (), {})
+
+class ActivationResend(ResendActivationView):
+    registration_profile = RegistrationProfile
+
+    def resend_activation(self, form):
+        site = get_current_site(self.request)
+        email = form.cleaned_data['email']
+        return self.registration_profile.objects.resend_activation_mail(
+            email, site, self.request)
+
+    def render_form_submitted_template(self, form):
+        email = form.cleaned_data['email']
+        context = {'email': email}
+        return render(self.request,
+                      'registration/resend_activation_complete.html',
+                      context)
+#Creando la vista para registro
+class Register(RegistrationView):
+
+    model = User
+    form_class = UserRegisterForm
+    success_url = reverse_lazy('user:registration_complete')#activation view
+
+    SEND_ACTIVATION_EMAIL = getattr(settings, 'SEND_ACTIVATION_EMAIL', True)
+    registration_profile = RegistrationProfile
+#Configurando el registro del usuario fuente:https://github.com/macropin/django-registration/blob/master/registration/backends/default/views.py
+
+    def register(self, form):
+        site = get_current_site(self.request)
+
+        if hasattr(form, 'save'):
+            new_user_instance = form.save()
+        else:
+            new_user_instance = (User.objects
+                                 .create_user(**form.cleaned_data))
+
+        new_user = self.registration_profile.objects.create_inactive_user(
+            new_user=new_user_instance,
+            site=site,
+            send_email=self.SEND_ACTIVATION_EMAIL,
+            request=self.request,
+        )
+        signals.user_registered.send(sender=self.__class__,
+                                     user=new_user,
+                                     request=self.request)
+        return new_user
+
+class Index(ListView):
     model = Twitt
     template_name = 'index.html'
 
 
-class profile(CreateView):
+class Profile(CreateView):
     model = Twitt
     template_name = 'user/profile.html'
     form_class = TwittForm
@@ -26,7 +106,7 @@ class profile(CreateView):
 
     #Sobreescribiendo el metodo get para mostrar twitts del usuario
     def get_context_data(self, **kwargs):
-        context = super(profile, self).get_context_data(**kwargs)
+        context = super(Profile, self).get_context_data(**kwargs)
 
         if 'twitts' not in context:
             context['twitts'] = Tview(User.objects.get(id=User.objects.filter(username=self.request.user)))
