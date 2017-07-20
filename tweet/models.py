@@ -13,3 +13,7 @@ class Twitt(models.Model):
 
     def __str__(self):
         return ('{} {}'.format(self.user_twit,self.text))
+
+    #Especificando campo por el cual se ordenara la informacion
+    class Meta:
+        ordering = ["-date_twit"]

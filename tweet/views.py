@@ -7,3 +7,4 @@ def Tview(user):
     #Realizando QuerySet y ordenando este de forma Desendente con la fecha
     data = Twitt.objects.filter(user_twit_id=user.id).order_by('-date_twit')
     return data
+
