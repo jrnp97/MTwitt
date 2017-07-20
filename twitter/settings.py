@@ -139,7 +139,10 @@ STATIC_URL = '/static/'
 #Configurando archivos staticos para heroku
 
 #definiendo la ruta del projecto
-PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
+
+#BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 #definiendo ruta a la cual iran los archivos estaticos cuando se ejcute collectstatics
 STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
