@@ -30,12 +30,12 @@ from tweet.views import Tview
 
 #Creando la vista para el manejo de la activacion
 class Activation(ActivationView):
-
     registration_profile = RegistrationProfile
 
     def activate(self, *args, **kwargs):
         activation_key = kwargs.get('activation_key', '')
         site = get_current_site(self.request)
+        print (site)
         activated_user = (self.registration_profile.objects
                           .activate_user(activation_key, site))
         if activated_user:
@@ -64,13 +64,13 @@ class ActivationResend(ResendActivationView):
                       context)
 #Creando la vista para registro
 class Register(RegistrationView):
-
     model = User
     form_class = UserRegisterForm
     success_url = reverse_lazy('user:registration_complete')#activation view
 
     SEND_ACTIVATION_EMAIL = getattr(settings, 'SEND_ACTIVATION_EMAIL', True)
     registration_profile = RegistrationProfile
+
 #Configurando el registro del usuario fuente:https://github.com/macropin/django-registration/blob/master/registration/backends/default/views.py
 
     def register(self, form):
